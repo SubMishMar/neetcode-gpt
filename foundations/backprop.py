@@ -15,6 +15,8 @@ class Solution:
         # Return: (dL_dw rounded to 5 decimals, dL_db rounded to 5 decimals)
         z = np.dot(x, w) + b
         y_hat = 1 / (1 + np.exp(-z))
-        dL_dw = (y_hat - y_true)*y_hat*(1-y_hat)*x
-        dL_db = (y_hat - y_true)*y_hat*(1-y_hat)
+        error = (y_hat - y_true)
+        dsigmoid = y_hat*(1-y_hat)
+        dL_dw = error*dsigmoid*x
+        dL_db = error*dsigmoid
         return np.round(dL_dw, 5), np.round(dL_db, 5)
