@@ -18,4 +18,6 @@ class Solution:
             y = 1 / (1 + np.exp(-z))
         elif activation == "relu":
             y = np.maximum(0, z)
+        else:
+            y = z
         return np.round(y, 5)
