@@ -11,13 +11,13 @@ class Solution:
         # 4. Pad shorter sequences with 0s using nn.utils.rnn.pad_sequence(tensors, batch_first=True)
         combined = positive + negative
 
-        vocab = []
+        vocab = set()
 
         for sentence in combined:
             for word in sentence.split():
-                vocab.append(word)
+                vocab.add(word)
 
-        vocab = sorted(set(vocab))
+        vocab = sorted(vocab)
 
         word_to_id = {}
 
