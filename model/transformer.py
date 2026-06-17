@@ -11,13 +11,14 @@ class TransformerBlock(nn.Module):
         torch.manual_seed(0)
         self.mhsa = self.MultiHeadedSelfAttention(model_dim, num_heads)
         self.ffn = self.VanillaNeuralNetwork(model_dim)
-        self.ln = nn.LayerNorm(model_dim)
+        self.ln1 = nn.LayerNorm(model_dim)
+        self.ln2 = nn.LayerNorm(model_dim)
 
     def forward(self, embedded: TensorType[float]) -> TensorType[float]:
         torch.manual_seed(0)
-        embedded = self.mhsa(self.ln(embedded)) + embedded
-        embedded = self.ffn(self.ln(embedded)) + embedded
-        return embedded
+        embedded = self.mhsa(self.ln1(embedded)) + embedded
+        embedded = self.ffn(self.ln2(embedded)) + embedded
+        return torch.round(embedded, decimals=4)
 
     class MultiHeadedSelfAttention(nn.Module):
 
