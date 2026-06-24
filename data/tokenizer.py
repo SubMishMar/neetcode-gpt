@@ -2,12 +2,12 @@ from typing import List
 
 
 class Solution:
-    def get_pair(self, sorted_pairs):
-        max_value = sorted_pairs[0][0]
+    def get_pair(self, stats):
+        max_value = max(stats.values())
         candidate_pairs = []
-        for sorted_pair in sorted_pairs:
-            if sorted_pair[0] == max_value:
-                candidate_pairs.append(sorted_pair[1])
+        for key, value in stats.items():
+            if value==max_value:
+                candidate_pairs.append(key)
         sorted_candidate_pairs = sorted(candidate_pairs)
         return sorted_candidate_pairs[0]
 
@@ -42,8 +42,7 @@ class Solution:
         merges = []
         for _ in range(num_merges):
             stats = self.get_stats(tokens)
-            sorted_pairs = list(sorted(((value, key) for key, value in stats.items()), reverse=True))
-            max_freq_pair = self.get_pair(sorted_pairs)
+            max_freq_pair = self.get_pair(stats)
             merge = [max_freq_pair[0], max_freq_pair[1]]
             merges.append(merge)
             newtokens = self.merge(tokens, max_freq_pair)
