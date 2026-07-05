@@ -13,10 +13,10 @@ class Solution:
                 start_pointer = end_pointer
                 end_pointer = len(text)
             else:
-                if start_pointer==end_pointer:
+                if start_pointer==end_pointer-1:
+                    tokens.append(sub_text)
                     start_pointer += 1
                     end_pointer = len(text)
-                    tokens.append(sub_text)
                 else:
                     end_pointer -= 1
         return tokens
