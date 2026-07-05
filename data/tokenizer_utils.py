@@ -12,12 +12,13 @@ class Solution:
                 tokens.append(sub_text)
                 start_pointer = end_pointer
                 end_pointer = len(text)
-            elif start_pointer==end_pointer:
-                start_pointer += 1
-                end_pointer = len(text)
-                tokens.append(sub_text)
             else:
-                end_pointer -= 1
+                if start_pointer==end_pointer:
+                    start_pointer += 1
+                    end_pointer = len(text)
+                    tokens.append(sub_text)
+                else:
+                    end_pointer -= 1
         return tokens
 
     def tokenize_numbers(self, numbers: List[int], vocab: Dict[str, int]) -> List[List[str]]:
