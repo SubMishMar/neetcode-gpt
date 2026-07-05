@@ -12,6 +12,9 @@ class Solution:
                 tokens.append(sub_text)
                 start_pointer = end_pointer
                 end_pointer = len(text)
+            elif match_found == False and len(sub_text)==1:
+                tokens.append(sub_text)
+                break
             else:
                 end_pointer -= 1
         return tokens
