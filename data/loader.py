@@ -16,7 +16,7 @@ class Solution:
         # Use torch.manual_seed(0) before generating random start indices
         # Use torch.randint to pick random starting positions
         torch.manual_seed(0)
-        idx = torch.randint(0, len(data)-context_length, (batch_size, ))
+        idx = torch.randint(0, len(data)-context_length, (batch_size, )) # upper limit is exclusive
         X = torch.zeros(batch_size, context_length, dtype=torch.long)
         Y = torch.zeros(batch_size, context_length, dtype=torch.long)
         for i, id in enumerate(idx):
