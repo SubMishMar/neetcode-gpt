@@ -19,7 +19,7 @@ class Solution:
             start_idx = torch.randint(0, len(data)-context_length, (batch_size, 1))
             offsets = torch.arange(context_length)
             x_offsets = start_idx+offsets
-            y_offsets = x_offsets+1
+            y_offsets = start_idx+(offsets+1)
             X = data[x_offsets]
             Y = data[y_offsets]
             logits = model(X) # BxTxC
