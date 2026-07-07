@@ -21,11 +21,11 @@ class GPT(nn.Module):
         # 2. Pass through transformer blocks
         # 3. Apply final LayerNorm, then project to vocab_size
         # 4. Return logits rounded to 4 decimal places (no softmax)
-        B, T = context.shape
-        x = self.token_embedding(context) + self.position_embdedding(torch.arange(T))
-        h = self.transformer_block(x)
-        h = self.layer_norm(h)
-        h = self.linear(h)
+        batch_size, context_size = context.shape
+        x = self.token_embedding(context) + self.position_embdedding(torch.arange(context_size)) # batch_size x context_size x model_dim
+        h = self.transformer_block(x) # batch_size x context_size x model_dim
+        h = self.layer_norm(h) # batch_size x context_size x model_dim
+        h = self.linear(h) # batch_size x context_size x vocab_size
         return torch.round(h, decimals=4)
 
 
