@@ -16,9 +16,12 @@ class Solution:
         optimizer = torch.optim.AdamW(model.parameters(), lr)
         for epoch in range(epochs):
             torch.manual_seed(epoch)
-            idx = torch.randint(0, len(data)-context_length, (batch_size, ))
-            X = torch.stack([data[id:id+context_length] for id in idx], dim=0)
-            Y = torch.stack([data[id+1:id+context_length+1] for id in idx], dim=0)
+            start_idx = torch.randint(0, len(data)-context_length, (batch_size, 1))
+            offsets = torch.arange(context_length)
+            x_offsets = start_idx+offsets
+            y_offsets = x_offsets+1
+            X = data[x_offsets]
+            Y = data[y_offsets]
             logits = model(X) # BxTxC
             _, _, C = logits.shape
             logits = logits.reshape(B*T, C)
