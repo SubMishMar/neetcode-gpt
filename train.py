@@ -17,11 +17,8 @@ class Solution:
         for epoch in range(epochs):
             torch.manual_seed(epoch)
             idx = torch.randint(0, len(data)-context_length, (batch_size, 1))
-            X = torch.zeros(batch_size, context_length, dtype=torch.long)
-            Y = torch.zeros(batch_size, context_length, dtype=torch.long)
-            for i, id in enumerate(idx):
-                X[i] = data[id:id+context_length]
-                Y[i] = data[id+1:id+context_length+1]
+            X = torch.stack([data[id:id+context_length] for id in idx], dim=0)
+            Y = torch.stack([data[id+1:id+context_length+1] for id in idx], dim=0)
             logits = model(X) # BxTxC
             _, _, C = logits.shape
             logits = logits.reshape(B*T, C)
