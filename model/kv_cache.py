@@ -44,7 +44,7 @@ class CachedAttention(nn.Module):
             kv_cache = KVCache()
         K, V = kv_cache.update(new_k, new_v)
         _, _, k_dim = K.shape
-        scaled_scores = (new_q @ K.transpose(-1, -2)) * (k_dim)**(-0.5)
+        scaled_scores = (new_q @ K.transpose(-2, -1)) * (k_dim)**(-0.5)
         output = nn.functional.softmax(scaled_scores, dim=-1) @ V
         return (torch.round(output, decimals=4), kv_cache) 
 
